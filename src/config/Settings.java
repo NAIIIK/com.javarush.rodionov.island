@@ -128,5 +128,5 @@ public final class Settings {
                     ))
             );
 
-    private Settings() {};
+    private Settings() {}
 }

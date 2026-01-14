@@ -67,6 +67,7 @@ public abstract class Animal implements Eatable {
     }
 
     public void move() {
+        //TODO: добавить учет максимального кол-ва клеток за тик
         List<Location> neighbourLocations = location.getNeighbourLocations();
 
         List<Location> accessibleLocations = neighbourLocations.stream()

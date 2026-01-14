@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
@@ -11,6 +12,9 @@ public class Location {
     public Location(int x, int y) {
         this.x = x;
         this.y = y;
+        animals = new ArrayList<>();
+        plants = new ArrayList<>();
+        neighbourLocations = new ArrayList<>();
     }
 
     public int countPlants() {

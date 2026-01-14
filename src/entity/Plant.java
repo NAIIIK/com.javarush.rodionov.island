@@ -16,7 +16,7 @@ public class Plant implements Eatable {
     @Override
     public void die() {
         alive = false;
-        location.canAddPlant(this);
+        location.removePlant(this);
     }
 
     @Override
