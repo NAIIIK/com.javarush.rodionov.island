@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Location {
-    private final int x, y;
+    private final Integer coordinateX;
+    private final Integer coordinateY;
     private List<Animal> animals;
     private List<Plant> plants;
     private List<Location> neighbourLocations;
 
-    public Location(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Location(int coordinateX, int coordinateY) {
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
         animals = new ArrayList<>();
         plants = new ArrayList<>();
         neighbourLocations = new ArrayList<>();

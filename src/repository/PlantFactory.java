@@ -7,7 +7,7 @@ import entity.Plant;
 
 public class PlantFactory implements Factory<Plant> {
     private final Island island = Island.getInstance();
-    private final static int MAX_ATTEMPTS = Settings.ISLAND_HEIGHT * Settings.ISLAND_WIDTH;
+    private static final int MAX_ATTEMPTS = Settings.ISLAND_LENGTH * Settings.ISLAND_WIDTH;
 
 
     @Override

@@ -12,7 +12,7 @@ import java.util.Map;
 
 public final class Settings {
     public static final int ISLAND_WIDTH = 100;
-    public static final int ISLAND_HEIGHT = 20;
+    public static final int ISLAND_LENGTH = 20;
 
     public static final Map<Class<? extends Animal>, AnimalStat> ANIMAL_STATS =
             Map.ofEntries(

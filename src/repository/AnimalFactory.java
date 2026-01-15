@@ -8,7 +8,7 @@ import entity.Location;
 public class AnimalFactory<T extends Animal> implements Factory<T> {
     private final Class<T> type;
     private final Island island = Island.getInstance();
-    private final static int MAX_ATTEMPTS = Settings.ISLAND_HEIGHT * Settings.ISLAND_WIDTH;
+    private static final int MAX_ATTEMPTS = Settings.ISLAND_LENGTH * Settings.ISLAND_WIDTH;
 
     public AnimalFactory(Class<T> type) {
         this.type = type;

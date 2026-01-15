@@ -12,7 +12,7 @@ import java.util.List;
 public class Island {
     private static Island instance;
 
-    private final Location[][] locations = new Location[Settings.ISLAND_WIDTH][Settings.ISLAND_HEIGHT];
+    private final Location[][] locations = new Location[Settings.ISLAND_WIDTH][Settings.ISLAND_LENGTH];
 
     private Island() {
         init();
@@ -47,7 +47,7 @@ public class Island {
 
     public Location getRandomLocation() {
         int x = Util.getRandomInt(Settings.ISLAND_WIDTH);
-        int y = Util.getRandomInt(Settings.ISLAND_HEIGHT);
+        int y = Util.getRandomInt(Settings.ISLAND_LENGTH);
 
         return locations[x][y];
     }
@@ -62,7 +62,7 @@ public class Island {
         List<Location> allLocations = new ArrayList<>();
 
         for (int x = 0; x < Settings.ISLAND_WIDTH; x++) {
-            for (int y = 0; y < Settings.ISLAND_HEIGHT; y++) {
+            for (int y = 0; y < Settings.ISLAND_LENGTH; y++) {
                 allLocations.add(locations[x][y]);
             }
         }
