@@ -67,19 +67,27 @@ public abstract class Animal implements Eatable {
     }
 
     public void move() {
-        //TODO: добавить учет максимального кол-ва клеток за тик
-        List<Location> neighbourLocations = location.getNeighbourLocations();
+        int maxSteps = getAnimalStat().getMaxMoveSpeed();
 
-        List<Location> accessibleLocations = neighbourLocations.stream()
-                .filter(loc -> loc.countAnimals(this.getClass()) < animalStat.getMaxQuantityOnCell())
-                .toList();
+        if (maxSteps == 0) return;
 
-        if (accessibleLocations.isEmpty()) return;
+        Location current = location;
 
-        Location newLocation = accessibleLocations.get(Util.getRandomInt(accessibleLocations.size()));
-        location.removeAnimal(this);
-        newLocation.addAnimal(this);
-        location = newLocation;
+        for (int i = 0; i < maxSteps; i++) {
+            List<Location> accessibleLocations = current.getNeighbourLocations().stream()
+                    .filter(loc -> loc.countAnimals(this.getClass()) < animalStat.getMaxQuantityOnCell())
+                    .toList();
+
+            if (accessibleLocations.isEmpty()) break;
+
+            current = accessibleLocations.get(Util.getRandomInt(accessibleLocations.size()));
+        }
+
+        if (current != location) {
+            location.removeAnimal(this);
+            current.addAnimal(this);
+            location = current;
+        }
     }
 
     public AnimalStat getAnimalStat() {
