@@ -1,7 +1,9 @@
-package entity;
+package entity.animal;
 
 import config.stat.AnimalStat;
 import config.Settings;
+import entity.Eatable;
+import entity.island.Location;
 import repository.AnimalFactory;
 import util.Util;
 
@@ -9,7 +11,7 @@ import java.util.List;
 
 public abstract class Animal implements Eatable {
     private final AnimalStat animalStat;
-    public Location location;
+    private Location location;
     private double satiety;
 
     protected Animal() {
@@ -69,13 +71,15 @@ public abstract class Animal implements Eatable {
     }
 
     public void tryMove() {
-        int maxSteps = getAnimalStat().getMaxMoveSpeed();
+        if (animalStat.getMaxMoveSpeed() == 0) return;
 
-        if (maxSteps == 0) return;
+        int steps = Util.getRandomInt(animalStat.getMaxMoveSpeed() + 1);
+
+        if (steps == 0) return;
 
         Location current = location;
 
-        for (int i = 0; i < maxSteps; i++) {
+        for (int i = 0; i < steps; i++) {
             List<Location> accessibleLocations = current.getAccessibleLocations(this);
 
             if (accessibleLocations.isEmpty()) break;
@@ -102,10 +106,5 @@ public abstract class Animal implements Eatable {
         satiety *= 0.9;
 
         if (satiety < (0.2 * animalStat.getFedUpWeight())) die();
-    }
-
-    @Override
-    public String toString() {
-        return animalStat.getEmoji();
     }
 }

@@ -1,7 +1,9 @@
-package entity;
+package entity.plant;
 
 import config.stat.PlantStat;
 import config.Settings;
+import entity.Eatable;
+import entity.island.Location;
 
 public class Plant implements Eatable {
     private final PlantStat plantStat;

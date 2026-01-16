@@ -1,7 +1,9 @@
-package entity;
+package entity.island;
 
 import config.Settings;
 import config.stat.AnimalStat;
+import entity.animal.Animal;
+import entity.plant.Plant;
 import repository.AnimalFactory;
 import repository.PlantFactory;
 import util.Util;
@@ -22,7 +24,7 @@ public class Island {
         populate();
     }
 
-    public static synchronized Island getInstance() {
+    public static Island getInstance() {
         if (instance == null) instance = new Island();
         return instance;
     }
@@ -95,7 +97,7 @@ public class Island {
         }
     }
 
-    public Map<Class<? extends Animal>, Integer> getAnimalsCount() {
+    public Map<Class<? extends Animal>, Integer> getAnimalsCountByType() {
         Map<Class<? extends Animal>, Integer> animalsCount = new HashMap<>();
 
         for (Class<? extends Animal> animalClass : Settings.ANIMAL_STATS.keySet()) {
@@ -110,6 +112,13 @@ public class Island {
         }
 
         return animalsCount;
+    }
+
+    public int getTotalAnimalsCount() {
+        return getAnimalsCountByType().values()
+                .stream()
+                .mapToInt(Integer::intValue)
+                .sum();
     }
 
     public int getPlantsCount() {

@@ -1,6 +1,8 @@
 package repository;
 
-import entity.Animal;
+import config.Settings;
+import entity.animal.Animal;
+import exception.AnimalCreationException;
 
 public class AnimalFactory<T extends Animal> implements Factory<T> {
     private final Class<T> type;
@@ -14,7 +16,7 @@ public class AnimalFactory<T extends Animal> implements Factory<T> {
         try {
             return type.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new AnimalCreationException(Settings.ANIMAL_CREATION_EXCEPTION_MESSAGE, e);
         }
     }
 }

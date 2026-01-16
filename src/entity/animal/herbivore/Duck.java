@@ -1,8 +1,9 @@
-package entity.herbivore;
+package entity.animal.herbivore;
 
 import entity.Eatable;
 
-public class Mouse extends Herbivore {
+public class Duck extends Herbivore {
+
     @Override
     protected boolean canEat(Eatable food) {
         return super.canEat(food) ||

@@ -1,6 +1,6 @@
-package entity.carnivore;
+package entity.animal.carnivore;
 
-import entity.Animal;
+import entity.animal.Animal;
 import entity.Eatable;
 
 public class Carnivore extends Animal {

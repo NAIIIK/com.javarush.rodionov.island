@@ -1,8 +1,8 @@
 package service;
 
-import entity.Animal;
-import entity.Island;
-import entity.Location;
+import entity.animal.Animal;
+import entity.island.Island;
+import entity.island.Location;
 import util.Util;
 
 public class AnimalActivityService implements IslandAppService {

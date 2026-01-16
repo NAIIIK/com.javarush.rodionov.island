@@ -1,4 +1,4 @@
-package entity.herbivore;
+package entity.animal.herbivore;
 
 import entity.Eatable;
 

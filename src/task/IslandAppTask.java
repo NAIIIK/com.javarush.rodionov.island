@@ -1,4 +1,4 @@
-package service.task;
+package task;
 
 import service.IslandAppService;
 

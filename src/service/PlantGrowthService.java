@@ -1,7 +1,7 @@
 package service;
 
-import entity.Island;
-import entity.Location;
+import entity.island.Island;
+import entity.island.Location;
 
 public class PlantGrowthService implements IslandAppService {
     private final Island island;

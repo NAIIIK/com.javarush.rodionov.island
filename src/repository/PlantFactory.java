@@ -1,6 +1,6 @@
 package repository;
 
-import entity.Plant;
+import entity.plant.Plant;
 
 public class PlantFactory implements Factory<Plant> {
     @Override

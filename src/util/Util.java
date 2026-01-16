@@ -1,7 +1,7 @@
 package util;
 
 import config.Settings;
-import entity.Animal;
+import entity.animal.Animal;
 import entity.Eatable;
 
 import java.util.List;

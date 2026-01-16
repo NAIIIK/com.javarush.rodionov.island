@@ -1,4 +1,8 @@
-package entity;
+package entity.island;
+
+import entity.Eatable;
+import entity.animal.Animal;
+import entity.plant.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +42,7 @@ public class Location {
     }
 
     public void addAnimal(Animal animal) {
-        if (!canAddAnimal(animal)) throw new RuntimeException();
+        if (!canAddAnimal(animal)) return;
 
         animals.add(animal);
         animal.setLocation(this);
@@ -53,7 +57,7 @@ public class Location {
     }
 
     public void addPlant(Plant plant) {
-        if (!canAddPlant(plant)) throw new RuntimeException();
+        if (!canAddPlant(plant)) return;
 
         plants.add(plant);
         plant.setLocation(this);

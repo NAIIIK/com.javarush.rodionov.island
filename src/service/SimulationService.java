@@ -1,6 +1,6 @@
 package service;
 
-import service.controller.SimulationController;
+import controller.SimulationController;
 
 public class SimulationService implements IslandAppService {
     private final SimulationController controller;

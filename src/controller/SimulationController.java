@@ -1,7 +1,7 @@
-package service.controller;
+package controller;
 
 import config.Settings;
-import entity.Island;
+import entity.island.Island;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,23 +18,21 @@ public class SimulationController {
     }
 
     public void checkSimulation() {
-        // TODO: fix try-catch block
+        if (executor.isShutdown()) return;
+
         int currentTick = tick.incrementAndGet();
 
-        int animalsCount = 0;
+        boolean noAnimals = island.getTotalAnimalsCount() == 0;
+        boolean noPlants = island.getPlantsCount() == 0;
 
-        for (var entry : island.getAnimalsCount().entrySet()) {
-            animalsCount += entry.getValue();
-        }
-
-        if (animalsCount == 0 ||
-                island.getPlantsCount() == 0 ||
-                currentTick > Settings.MAX_SIMULATION_DURATION) {
+        if (noAnimals ||
+                noPlants ||
+                currentTick >= Settings.MAX_SIMULATION_TICK_DURATION) {
 
             try {
-                System.out.println("=== SIMULATION STOPPED ===");
+                System.out.println("\n=== SIMULATION STOPPED ===");
                 executor.shutdown();
-                if (!executor.awaitTermination(5, TimeUnit.SECONDS)) executor.shutdownNow();
+                if (!executor.awaitTermination(2, TimeUnit.SECONDS)) executor.shutdownNow();
             } catch (InterruptedException e) {
                 executor.shutdownNow();
                 Thread.currentThread().interrupt();

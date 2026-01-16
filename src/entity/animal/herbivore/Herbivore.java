@@ -1,8 +1,8 @@
-package entity.herbivore;
+package entity.animal.herbivore;
 
-import entity.Animal;
+import entity.animal.Animal;
 import entity.Eatable;
-import entity.Plant;
+import entity.plant.Plant;
 
 public class Herbivore extends Animal {
     @Override
