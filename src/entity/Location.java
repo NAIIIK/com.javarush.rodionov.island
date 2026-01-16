@@ -8,9 +8,9 @@ import java.util.stream.Stream;
 public class Location {
     private final Integer coordinateX;
     private final Integer coordinateY;
-    private List<Animal> animals = new CopyOnWriteArrayList<>();
-    private List<Plant> plants = new CopyOnWriteArrayList<>();
-    private List<Location> neighbourLocations = new ArrayList<>();
+    private final List<Animal> animals = new CopyOnWriteArrayList<>();
+    private final List<Plant> plants = new CopyOnWriteArrayList<>();
+    private final List<Location> neighbourLocations = new ArrayList<>();
 
     public Location(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
@@ -75,10 +75,6 @@ public class Location {
 
     public List<Animal> getAnimals() {
         return animals;
-    }
-
-    public List<Plant> getPlants() {
-        return plants;
     }
 
     public List<Eatable> getAllOrganisms() {

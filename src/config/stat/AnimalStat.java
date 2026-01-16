@@ -1,11 +1,11 @@
 package config.stat;
 
 public final class AnimalStat implements Stat {
-    private double weight;
-    private int maxQuantityOnCell;
-    private int maxMoveSpeed;
-    private double fedUpWeight;
-    private String emoji;
+    private final double weight;
+    private final int maxQuantityOnCell;
+    private final int maxMoveSpeed;
+    private final double fedUpWeight;
+    private final String emoji;
 
     public AnimalStat(double weight, int maxQuantityOnCell, int maxMoveSpeed, double fedUpWeight, String emoji) {
         this.weight = weight;

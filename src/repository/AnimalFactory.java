@@ -12,8 +12,7 @@ public class AnimalFactory<T extends Animal> implements Factory<T> {
     @Override
     public T create() {
         try {
-            T animal = type.getDeclaredConstructor().newInstance();
-            return animal;
+            return type.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new RuntimeException();
         }

@@ -47,13 +47,6 @@ public class Island {
         }
     }
 
-    public Location getRandomLocation() {
-        int x = Util.getRandomInt(Settings.ISLAND_WIDTH);
-        int y = Util.getRandomInt(Settings.ISLAND_LENGTH);
-
-        return locations[x][y];
-    }
-
     private void populate() {
         for (Location location : getAllLocations()) {
             growPlants(location);
