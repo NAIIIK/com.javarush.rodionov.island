@@ -30,9 +30,4 @@ public class Plant implements Eatable {
     public void setLocation(Location location) {
         this.location = location;
     }
-
-    @Override
-    public String toString() {
-        return "\uD83C\uDF31";
-    }
 }
