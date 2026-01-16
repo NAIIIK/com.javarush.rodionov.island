@@ -16,21 +16,21 @@ public final class Settings {
 
     public static final Map<Class<? extends Animal>, AnimalStat> ANIMAL_STATS =
             Map.ofEntries(
-                    Map.entry(Wolf.class, new AnimalStat(50.0, 30, 3, 8.0)),
-                    Map.entry(BoaConstrictor.class, new AnimalStat(15.0, 30, 1, 3.0)),
-                    Map.entry(Fox.class, new AnimalStat(8.0, 30, 2, 2.0)),
-                    Map.entry(Bear.class, new AnimalStat(500.0, 5, 2, 80.0)),
-                    Map.entry(Eagle.class, new AnimalStat(6.0, 20, 3, 1.0)),
-                    Map.entry(Horse.class, new AnimalStat(400.0, 20, 4, 60.0)),
-                    Map.entry(Deer.class, new AnimalStat(300.0, 20, 4, 50.0)),
-                    Map.entry(Rabbit.class, new AnimalStat(2.0, 150, 2, 0.45)),
-                    Map.entry(Mouse.class, new AnimalStat(0.05, 500, 1, 0.01)),
-                    Map.entry(Goat.class, new AnimalStat(60.0, 140, 3, 10.0)),
-                    Map.entry(Sheep.class, new AnimalStat(70.0, 140, 3, 15.0)),
-                    Map.entry(Boar.class, new AnimalStat(400.0, 50, 2, 50.0)),
-                    Map.entry(Buffalo.class, new AnimalStat(700.0, 10, 3, 100.0)),
-                    Map.entry(Duck.class, new AnimalStat(1.0, 200, 4, 0.15)),
-                    Map.entry(Caterpillar.class, new AnimalStat(0.01, 1000, 0, 0))
+                    Map.entry(Wolf.class, new AnimalStat(50.0, 30, 3, 8.0, "\uD83D\uDC3A")),
+                    Map.entry(BoaConstrictor.class, new AnimalStat(15.0, 30, 1, 3.0, "\uD83D\uDC0D")),
+                    Map.entry(Fox.class, new AnimalStat(8.0, 30, 2, 2.0, "\uD83E\uDD8A")),
+                    Map.entry(Bear.class, new AnimalStat(500.0, 5, 2, 80.0, "\uD83D\uDC3B")),
+                    Map.entry(Eagle.class, new AnimalStat(6.0, 20, 3, 1.0, "\uD83E\uDD85")),
+                    Map.entry(Horse.class, new AnimalStat(400.0, 20, 4, 60.0, "\uD83D\uDC0E")),
+                    Map.entry(Deer.class, new AnimalStat(300.0, 20, 4, 50.0, "\uD83E\uDD8C")),
+                    Map.entry(Rabbit.class, new AnimalStat(2.0, 150, 2, 0.45, "\uD83D\uDC07")),
+                    Map.entry(Mouse.class, new AnimalStat(0.05, 500, 1, 0.01, "\uD83D\uDC01")),
+                    Map.entry(Goat.class, new AnimalStat(60.0, 140, 3, 10.0, "\uD83D\uDC10")),
+                    Map.entry(Sheep.class, new AnimalStat(70.0, 140, 3, 15.0, "\uD83D\uDC11")),
+                    Map.entry(Boar.class, new AnimalStat(400.0, 50, 2, 50.0, "\uD83D\uDC17")),
+                    Map.entry(Buffalo.class, new AnimalStat(700.0, 10, 3, 100.0, "\uD83D\uDC03")),
+                    Map.entry(Duck.class, new AnimalStat(1.0, 200, 4, 0.15, "\uD83E\uDD86")),
+                    Map.entry(Caterpillar.class, new AnimalStat(0.01, 1000, 0, 0, "\uD83D\uDC1B"))
             );
 
     public static final PlantStat PLANT_STATS = new PlantStat(1.0, 200);

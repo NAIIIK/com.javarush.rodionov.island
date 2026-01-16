@@ -64,6 +64,12 @@ public class Location {
         return neighbourLocations;
     }
 
+    public List<Location> getAccessibleLocations(Animal animal) {
+        return getNeighbourLocations().stream()
+                .filter(loc -> loc.countAnimals(animal.getClass()) < animal.getAnimalStat().getMaxQuantityOnCell())
+                .toList();
+    }
+
     public void addNeighbourLocation(Location location) {
         neighbourLocations.add(location);
     }

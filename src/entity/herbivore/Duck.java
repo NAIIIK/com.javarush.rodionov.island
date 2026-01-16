@@ -1,8 +1,12 @@
 package entity.herbivore;
 
+import entity.Eatable;
+
 public class Duck extends Herbivore {
+
     @Override
-    public String toString() {
-        return "\uD83E\uDD86";
+    protected boolean canEat(Eatable food) {
+        return super.canEat(food) ||
+                food instanceof Caterpillar;
     }
 }

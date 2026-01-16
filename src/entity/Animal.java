@@ -13,13 +13,15 @@ public abstract class Animal implements Eatable {
     private double satiety;
     private boolean alive;
 
-    public Animal() {
+    protected Animal() {
         this.animalStat = Settings.ANIMAL_STATS.get(this.getClass());
         this.satiety = animalStat.getFedUpWeight()/2;
         this.alive = true;
     }
 
     public boolean tryEat(Eatable food) {
+        if (!canEat(food)) return false;
+
         int eatingChance = Util.getEatingChance(this, food);
         int random = Util.getRandomInt(100);
 
@@ -33,15 +35,15 @@ public abstract class Animal implements Eatable {
 
     private void eat(Eatable food) {
         double foodWeight = food.getWeight();
-
         double canEat = Math.min(foodWeight, animalStat.getFedUpWeight() - satiety);
 
         if (canEat <= 0) return;
 
         satiety += canEat;
-
         food.die();
     }
+
+    protected abstract boolean canEat(Eatable food);
 
     @Override
     public double getWeight() {
@@ -74,9 +76,7 @@ public abstract class Animal implements Eatable {
         Location current = location;
 
         for (int i = 0; i < maxSteps; i++) {
-            List<Location> accessibleLocations = current.getNeighbourLocations().stream()
-                    .filter(loc -> loc.countAnimals(this.getClass()) < animalStat.getMaxQuantityOnCell())
-                    .toList();
+            List<Location> accessibleLocations = current.getAccessibleLocations(this);
 
             if (accessibleLocations.isEmpty()) break;
 
@@ -104,5 +104,14 @@ public abstract class Animal implements Eatable {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public void decreaseSatiety() {
+        satiety -= satiety * 0.1;
+    }
+
+    @Override
+    public String toString() {
+        return animalStat.getEmoji();
     }
 }

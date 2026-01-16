@@ -5,12 +5,14 @@ public final class AnimalStat implements Stat {
     private int maxQuantityOnCell;
     private int maxMoveSpeed;
     private double fedUpWeight;
+    private String emoji;
 
-    public AnimalStat(double weight, int maxQuantityOnCell, int maxMoveSpeed, double fedUpWeight) {
+    public AnimalStat(double weight, int maxQuantityOnCell, int maxMoveSpeed, double fedUpWeight, String emoji) {
         this.weight = weight;
         this.maxQuantityOnCell = maxQuantityOnCell;
         this.maxMoveSpeed = maxMoveSpeed;
         this.fedUpWeight = fedUpWeight;
+        this.emoji = emoji;
     }
 
     @Override
@@ -29,5 +31,9 @@ public final class AnimalStat implements Stat {
 
     public double getFedUpWeight() {
         return fedUpWeight;
+    }
+
+    public String getEmoji() {
+        return emoji;
     }
 }
