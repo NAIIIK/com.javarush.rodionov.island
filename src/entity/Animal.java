@@ -11,26 +11,29 @@ public abstract class Animal implements Eatable {
     private final AnimalStat animalStat;
     public Location location;
     private double satiety;
-    private boolean alive;
 
     protected Animal() {
         this.animalStat = Settings.ANIMAL_STATS.get(this.getClass());
         this.satiety = animalStat.getFedUpWeight()/2;
-        this.alive = true;
     }
 
-    public boolean tryEat(Eatable food) {
-        if (!canEat(food)) return false;
+    protected abstract boolean canEat(Eatable food);
+
+    public void tryEat() {
+        List<Eatable> foodOptions = location.getAllOrganisms();
+
+        if (foodOptions.isEmpty()) return;
+
+        Eatable food = foodOptions.get(Util.getRandomInt(foodOptions.size()));
+
+        if (!canEat(food)) return;
 
         int eatingChance = Util.getEatingChance(this, food);
         int random = Util.getRandomInt(100);
 
         if (random < eatingChance) {
             eat(food);
-            return true;
         }
-
-        return false;
     }
 
     private void eat(Eatable food) {
@@ -43,8 +46,6 @@ public abstract class Animal implements Eatable {
         food.die();
     }
 
-    protected abstract boolean canEat(Eatable food);
-
     @Override
     public double getWeight() {
         return animalStat.getWeight();
@@ -52,7 +53,6 @@ public abstract class Animal implements Eatable {
 
     @Override
     public void die() {
-        alive = false;
         location.removeAnimal(this);
     }
 
@@ -68,7 +68,7 @@ public abstract class Animal implements Eatable {
         location.addAnimal(baby);
     }
 
-    public void move() {
+    public void tryMove() {
         int maxSteps = getAnimalStat().getMaxMoveSpeed();
 
         if (maxSteps == 0) return;
@@ -94,20 +94,14 @@ public abstract class Animal implements Eatable {
         return animalStat;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
     public void setLocation(Location location) {
         this.location = location;
     }
 
     public void decreaseSatiety() {
-        satiety -= satiety * 0.1;
+        satiety *= 0.9;
+
+        if (satiety < (0.2 * animalStat.getFedUpWeight())) die();
     }
 
     @Override

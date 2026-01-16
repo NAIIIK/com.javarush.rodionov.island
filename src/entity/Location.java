@@ -2,20 +2,19 @@ package entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Stream;
 
 public class Location {
     private final Integer coordinateX;
     private final Integer coordinateY;
-    private List<Animal> animals;
-    private List<Plant> plants;
-    private List<Location> neighbourLocations;
+    private List<Animal> animals = new CopyOnWriteArrayList<>();
+    private List<Plant> plants = new CopyOnWriteArrayList<>();
+    private List<Location> neighbourLocations = new ArrayList<>();
 
     public Location(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
         this.coordinateY = coordinateY;
-        animals = new ArrayList<>();
-        plants = new ArrayList<>();
-        neighbourLocations = new ArrayList<>();
     }
 
     public int countPlants() {
@@ -72,5 +71,18 @@ public class Location {
 
     public void addNeighbourLocation(Location location) {
         neighbourLocations.add(location);
+    }
+
+    public List<Animal> getAnimals() {
+        return animals;
+    }
+
+    public List<Plant> getPlants() {
+        return plants;
+    }
+
+    public List<Eatable> getAllOrganisms() {
+        return Stream.concat(animals.stream(), plants.stream())
+                .toList();
     }
 }

@@ -6,6 +6,9 @@ import entity.Eatable;
 public class Carnivore extends Animal {
     @Override
     protected boolean canEat(Eatable food) {
-        return food instanceof Animal;
+        if (food instanceof Animal prey) {
+            return prey.getClass() != this.getClass();
+        }
+        return false;
     }
 }

@@ -7,7 +7,9 @@ import repository.PlantFactory;
 import util.Util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Island {
     private static Island instance;
@@ -40,7 +42,7 @@ public class Island {
                 if (x > 0) current.addNeighbourLocation(locations[x-1][y]);
                 if (x < locations.length - 1) current.addNeighbourLocation(locations[x+1][y]);
                 if (y > 0) current.addNeighbourLocation(locations[x][y-1]);
-                if (y < locations[x].length) current.addNeighbourLocation(locations[x][y+1]);
+                if (y < locations[x].length - 1) current.addNeighbourLocation(locations[x][y+1]);
             }
         }
     }
@@ -54,11 +56,11 @@ public class Island {
 
     private void populate() {
         for (Location location : getAllLocations()) {
-            populatePlants(location);
+            growPlants(location);
             populateAnimals(location);
         }
     }
-    private List<Location> getAllLocations() {
+    public List<Location> getAllLocations() {
         List<Location> allLocations = new ArrayList<>();
 
         for (int x = 0; x < Settings.ISLAND_WIDTH; x++) {
@@ -70,9 +72,11 @@ public class Island {
         return allLocations;
     }
 
-    private void populatePlants(Location location) {
+    public void growPlants(Location location) {
         int maxPlants = Settings.PLANT_STATS.getMaxQuantityOnCell();
-        int count = Util.getRandomInt(maxPlants + 1);
+        int current = location.countPlants();
+
+        int count = Util.getRandomInt((maxPlants - current) + 1);
 
         PlantFactory factory = new PlantFactory();
 
@@ -96,5 +100,32 @@ public class Island {
                 location.addAnimal(animal);
             }
         }
+    }
+
+    public Map<Class<? extends Animal>, Integer> getAnimalsCount() {
+        Map<Class<? extends Animal>, Integer> animalsCount = new HashMap<>();
+
+        for (Class<? extends Animal> animalClass : Settings.ANIMAL_STATS.keySet()) {
+            animalsCount.put(animalClass, 0);
+        }
+
+        for (Location location : getAllLocations()) {
+            for (Class<? extends Animal> c : Settings.ANIMAL_STATS.keySet()) {
+                int current = animalsCount.get(c);
+                animalsCount.put(c, current + location.countAnimals(c));
+            }
+        }
+
+        return animalsCount;
+    }
+
+    public int getPlantsCount() {
+        int sum = 0;
+
+        for (Location location : getAllLocations()) {
+            sum += location.countPlants();
+        }
+
+        return sum;
     }
 }

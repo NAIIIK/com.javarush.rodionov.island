@@ -4,6 +4,7 @@ import config.Settings;
 import entity.Animal;
 import entity.Eatable;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -21,5 +22,15 @@ public final class Util {
 
     public static int getRandomInt(int bound) {
         return ThreadLocalRandom.current().nextInt(bound);
+    }
+
+    public static void performRandomActivity(Animal animal) {
+        List<Runnable> activities = List.of(
+                animal::tryMove,
+                animal::tryEat,
+                animal::breed
+        );
+
+        activities.get(Util.getRandomInt(activities.size())).run();
     }
 }

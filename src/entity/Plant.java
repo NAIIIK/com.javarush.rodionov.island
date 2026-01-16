@@ -6,16 +6,13 @@ import config.Settings;
 public class Plant implements Eatable {
     private final PlantStat plantStat;
     private Location location;
-    private boolean alive;
 
     public Plant() {
         this.plantStat = Settings.PLANT_STATS;
-        this.alive = true;
     }
 
     @Override
     public void die() {
-        alive = false;
         location.removePlant(this);
     }
 
@@ -26,14 +23,6 @@ public class Plant implements Eatable {
 
     public PlantStat getPlantStat() {
         return plantStat;
-    }
-
-    public boolean isAlive() {
-        return alive;
-    }
-
-    public Location getLocation() {
-        return location;
     }
 
     public void setLocation(Location location) {
