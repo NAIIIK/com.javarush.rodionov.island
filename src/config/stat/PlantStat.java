@@ -1,8 +1,8 @@
 package config.stat;
 
 public final class PlantStat implements Stat {
-    private Double weight;
-    private Integer maxQuantityOnCell;
+    private final Double weight;
+    private final Integer maxQuantityOnCell;
 
     public PlantStat(double weight, int maxQuantityOnCell) {
         this.weight = weight;
