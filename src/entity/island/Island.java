@@ -4,6 +4,7 @@ import config.Settings;
 import config.stat.AnimalStat;
 import entity.animal.Animal;
 import entity.plant.Plant;
+import exception.AnimalCreationException;
 import repository.AnimalFactory;
 import repository.PlantFactory;
 import util.Util;
@@ -88,11 +89,15 @@ public class Island {
             int maxAnimals = animalStat.getMaxQuantityOnCell();
             int count = Util.getRandomInt(maxAnimals + 1);
 
-            AnimalFactory<? extends Animal> factory = new AnimalFactory<>(animalClass);
+            try {
+                AnimalFactory<? extends Animal> factory = new AnimalFactory<>(animalClass);
 
-            for (int i = 0; i < count; i++) {
-                Animal animal = factory.create();
-                location.addAnimal(animal);
+                for (int i = 0; i < count; i++) {
+                    Animal animal = factory.create();
+                    location.addAnimal(animal);
+                }
+            } catch (AnimalCreationException e) {
+                System.err.println(e.getMessage());
             }
         }
     }

@@ -4,6 +4,7 @@ import config.stat.AnimalStat;
 import config.Settings;
 import entity.Eatable;
 import entity.island.Location;
+import exception.AnimalCreationException;
 import repository.AnimalFactory;
 import util.Util;
 
@@ -59,15 +60,19 @@ public abstract class Animal implements Eatable {
     }
 
     public void breed() {
-        AnimalFactory<? extends Animal> factory = new AnimalFactory<>(this.getClass());
-
         int count = location.countAnimals(this.getClass());
 
         if (satiety < animalStat.getFedUpWeight()/2) return;
         if (count >= animalStat.getMaxQuantityOnCell() || count < 4) return;
 
-        Animal baby = factory.create();
-        location.addAnimal(baby);
+        try {
+            AnimalFactory<? extends Animal> factory = new AnimalFactory<>(this.getClass());
+
+            Animal baby = factory.create();
+            location.addAnimal(baby);
+        } catch (AnimalCreationException e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     public void tryMove() {
