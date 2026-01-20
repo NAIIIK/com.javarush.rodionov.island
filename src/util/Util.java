@@ -32,5 +32,6 @@ public final class Util {
         );
 
         activities.get(Util.getRandomInt(activities.size())).run();
+        animal.decreaseSatiety();
     }
 }

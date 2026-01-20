@@ -60,7 +60,7 @@ public abstract class Animal implements Eatable {
     }
 
     public void breed() {
-        int count = location.countAnimals(this.getClass());
+        int count = location.countAnimalsByType(this.getClass());
 
         if (satiety < animalStat.getFedUpWeight()/2) return;
         if (count >= animalStat.getMaxQuantityOnCell() || count < 4) return;
@@ -93,9 +93,20 @@ public abstract class Animal implements Eatable {
         }
 
         if (current != location) {
-            location.removeAnimal(this);
-            current.addAnimal(this);
-            location = current;
+            Location firstLock = location.hashCode() < current.hashCode() ? location : current;
+            Location secondLock = location.hashCode() < current.hashCode() ? current : location;
+
+            firstLock.getLock().lock();
+            secondLock.getLock().lock();
+
+            try {
+                location.removeAnimal(this);
+                current.addAnimal(this);
+                location = current;
+            } finally {
+                secondLock.getLock().unlock();
+                firstLock.getLock().unlock();
+            }
         }
     }
 

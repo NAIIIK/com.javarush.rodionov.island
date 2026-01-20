@@ -6,15 +6,16 @@ import entity.plant.Plant;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.stream.Stream;
 
 public class Location {
     private final Integer coordinateX;
     private final Integer coordinateY;
-    private final List<Animal> animals = new CopyOnWriteArrayList<>();
-    private final List<Plant> plants = new CopyOnWriteArrayList<>();
+    private final List<Animal> animals = new ArrayList<>();
+    private final List<Plant> plants = new ArrayList<>();
     private final List<Location> neighbourLocations = new ArrayList<>();
+    private final ReentrantLock lock = new ReentrantLock();
 
     public Location(int coordinateX, int coordinateY) {
         this.coordinateX = coordinateX;
@@ -25,7 +26,11 @@ public class Location {
         return plants.size();
     }
 
-    public int countAnimals(Class<? extends Animal> type) {
+    public int countAnimals() {
+        return animals.size();
+    }
+
+    public int countAnimalsByType(Class<? extends Animal> type) {
         return (int) animals.stream()
                 .filter(animal -> animal.getClass() == type)
                 .count();
@@ -37,7 +42,7 @@ public class Location {
     }
 
     public boolean canAddAnimal(Animal animal) {
-        int current = countAnimals(animal.getClass());
+        int current = countAnimalsByType(animal.getClass());
         return current < animal.getAnimalStat().getMaxQuantityOnCell();
     }
 
@@ -69,7 +74,7 @@ public class Location {
 
     public List<Location> getAccessibleLocations(Animal animal) {
         return getNeighbourLocations().stream()
-                .filter(loc -> loc.countAnimals(animal.getClass()) < animal.getAnimalStat().getMaxQuantityOnCell())
+                .filter(loc -> loc.countAnimalsByType(animal.getClass()) < animal.getAnimalStat().getMaxQuantityOnCell())
                 .toList();
     }
 
@@ -84,5 +89,9 @@ public class Location {
     public List<Eatable> getAllOrganisms() {
         return Stream.concat(animals.stream(), plants.stream())
                 .toList();
+    }
+
+    public ReentrantLock getLock() {
+        return lock;
     }
 }

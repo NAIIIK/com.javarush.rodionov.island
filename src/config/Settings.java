@@ -11,11 +11,11 @@ import entity.animal.herbivore.*;
 import java.util.Map;
 
 public final class Settings {
-    public static final Integer CORE_POOL_SIZE = 4;
-    public static final Integer MAX_SIMULATION_TICK_DURATION = 15;
+    public static final Integer CORE_POOL_SIZE = 3;
+    public static final Integer MAX_SIMULATION_TICK_DURATION = 100;
 
-    public static final Integer ISLAND_WIDTH = 10;
-    public static final Integer ISLAND_LENGTH = 2;
+    public static final Integer ISLAND_WIDTH = 20;
+    public static final Integer ISLAND_LENGTH = 5;
 
     public static final Map<Class<? extends Animal>, AnimalStat> ANIMAL_STATS =
             Map.ofEntries(
