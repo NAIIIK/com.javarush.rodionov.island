@@ -10,40 +10,45 @@ import java.util.concurrent.ScheduledExecutorService;
 
 public class TickTask implements Runnable{
     private final Island island;
-    private final View view;
     private final ExecutorService executorService;
-    private final ScheduledExecutorService scheduler;
+    private final View view;
+    private final ScheduledExecutorService simulationScheduler;
     private final SimulationController controller;
+    private final Phaser phaser = new Phaser(1);
 
-    public TickTask (
+    public TickTask(
             Island island,
-            View view,
             ExecutorService executorService,
-            ScheduledExecutorService scheduler,
+            View view,
+            ScheduledExecutorService simulationScheduler,
             SimulationController controller) {
         this.island = island;
-        this.view = view;
         this.executorService = executorService;
-        this.scheduler = scheduler;
+        this.view = view;
+        this.simulationScheduler = simulationScheduler;
         this.controller = controller;
     }
 
     @Override
     public void run() {
-        Phaser phaser = new Phaser(1);
+        SimulationTask[] tasks = new SimulationTask[] {
+                new SimulationTask(new AnimalActivityTask(island), phaser),
+                new SimulationTask(new PlantGrowthTask(island), phaser),
+                new SimulationTask(new StatisticsTask(view), phaser)
+        };
 
-        executorService.submit(new SimulationTask(new AnimalActivityTask(island), phaser));
-        executorService.submit(new SimulationTask(new PlantGrowthTask(island), phaser));
-        executorService.submit(new SimulationTask(new StatisticsTask(view), phaser));
+        phaser.bulkRegister(tasks.length);
+
+        for (SimulationTask task : tasks) executorService.submit(task);
 
         phaser.arriveAndAwaitAdvance();
 
         if (controller.checkSimulation()) {
-            scheduler.shutdown();
+            simulationScheduler.shutdown();
             executorService.shutdown();
             try {
-                scheduler.awaitTermination(10, java.util.concurrent.TimeUnit.SECONDS);
-                executorService.awaitTermination(10, java.util.concurrent.TimeUnit.SECONDS);
+                if (!simulationScheduler.awaitTermination(10, java.util.concurrent.TimeUnit.SECONDS)) simulationScheduler.shutdownNow();
+                if (!executorService.awaitTermination(10, java.util.concurrent.TimeUnit.SECONDS)) executorService.shutdownNow();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }

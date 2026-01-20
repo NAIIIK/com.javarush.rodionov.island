@@ -5,7 +5,7 @@ import service.PlantService;
 
 public class PlantGrowthTask implements Runnable {
     private final Island island;
-    private final PlantService plantService = new PlantService();
+    private final PlantService plantService = PlantService.getInstance();
 
     public PlantGrowthTask(Island island) {
         this.island = island;

@@ -4,27 +4,29 @@ import config.stat.PlantStat;
 import config.Settings;
 import entity.Eatable;
 import entity.island.Location;
+import service.PlantService;
 
 public class Plant implements Eatable {
-    private final PlantStat plantStat;
+    private final PlantStat stat;
     private Location location;
+    private final PlantService service = PlantService.getInstance();
 
     public Plant() {
-        this.plantStat = Settings.PLANT_STATS;
+        this.stat = Settings.PLANT_STATS;
     }
 
     @Override
     public void die() {
-        location.removePlant(this);
+        service.rot(this);
     }
 
     @Override
     public double getWeight() {
-        return plantStat.getWeight();
+        return stat.getWeight();
     }
 
-    public PlantStat getPlantStat() {
-        return plantStat;
+    public Location getLocation() {
+        return location;
     }
 
     public void setLocation(Location location) {

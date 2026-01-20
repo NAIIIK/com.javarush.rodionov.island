@@ -4,11 +4,11 @@ import config.Settings;
 import entity.animal.Animal;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
-public class Island {
+public final class Island {
     private static Island instance;
 
     private final Location[][] locations = new Location[Settings.ISLAND_WIDTH][Settings.ISLAND_LENGTH];
@@ -25,11 +25,13 @@ public class Island {
     }
 
     private void init() {
+        int counter = 1;
         for (int x = 0; x < locations.length; x++) {
             for (int y = 0; y < locations[x].length; y++) {
-                Location loc = new Location(x, y);
+                Location loc = new Location(x, y, counter);
                 locations[x][y] = loc;
                 allLocations.add(loc);
+                counter++;
             }
         }
     }
@@ -51,36 +53,32 @@ public class Island {
     }
 
     public Map<Class<? extends Animal>, Integer> getAnimalsCountByType() {
-        Map<Class<? extends Animal>, Integer> animalsCount = new HashMap<>();
+        Map<Class<? extends Animal>, Integer> animalsCount = new ConcurrentHashMap<>();
 
         for (Class<? extends Animal> animalClass : Settings.ANIMAL_STATS.keySet()) {
             animalsCount.put(animalClass, 0);
         }
 
-        for (Location location : allLocations) {
-            location.getLock().lock();
-            try {
-                for (Class<? extends Animal> c : Settings.ANIMAL_STATS.keySet()) {
-                    int current = animalsCount.get(c);
-                    animalsCount.put(c, current + location.countAnimalsByType(c));
-                }
-            } finally {
-                location.getLock().unlock();
+        allLocations.parallelStream().forEach(location -> {
+            List<Animal> snapshot = location.getAnimalsSnapshot();
+            for (Class<? extends Animal> c : Settings.ANIMAL_STATS.keySet()) {
+                long count = snapshot.stream().filter(a -> a.getClass() == c).count();
+                animalsCount.merge(c, (int) count, Integer::sum);
             }
-        }
+        });
 
         return animalsCount;
     }
 
     public int getAllAnimalsCount() {
         return allLocations.stream()
-                .mapToInt(Location::countAnimals)
+                .mapToInt(loc -> loc.getAnimalsSnapshot().size())
                 .sum();
     }
 
     public int getPlantsCount() {
         return allLocations.stream()
-                .mapToInt(Location::countPlants)
+                .mapToInt(loc -> loc.getPlantsSnapshot().size())
                 .sum();
     }
 }

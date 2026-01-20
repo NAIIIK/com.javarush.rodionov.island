@@ -15,18 +15,18 @@ public class Application {
     public static void main(String[] args) {
         Island island = Island.getInstance();
 
-        new PlantService().growAllPlants(island);
-        new AnimalService().populateAllAnimals(island);
+        PlantService.getInstance().growAllPlants(island);
+        AnimalService.getInstance().populateAllAnimals(island);
 
         View view = new ConsoleUI(island);
 
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService simulationScheduler = Executors.newSingleThreadScheduledExecutor();
         ExecutorService executorService = Executors.newFixedThreadPool(Settings.CORE_POOL_SIZE);
 
-        SimulationController controller = new SimulationController(island, scheduler);
+        SimulationController controller = new SimulationController(island, simulationScheduler);
 
-        TickTask tickTask = new TickTask(island, view, executorService, scheduler, controller);
+        TickTask tickTask = new TickTask(island, executorService, view, simulationScheduler, controller);
 
-        scheduler.scheduleAtFixedRate(tickTask, 0, 1, TimeUnit.SECONDS);
+        simulationScheduler.scheduleAtFixedRate(tickTask, 0, Settings.DELAY_SECONDS, TimeUnit.SECONDS);
     }
 }

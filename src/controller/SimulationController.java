@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SimulationController {
     private final Island island;
     private final ScheduledExecutorService executor;
-    private AtomicInteger tick = new AtomicInteger();
+    private final AtomicInteger tick = new AtomicInteger();
 
     public SimulationController(Island island, ScheduledExecutorService executor) {
         this.island = island;

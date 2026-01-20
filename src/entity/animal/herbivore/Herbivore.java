@@ -6,7 +6,7 @@ import entity.plant.Plant;
 
 public class Herbivore extends Animal {
     @Override
-    protected boolean canEat(Eatable food) {
+    public boolean canEat(Eatable food) {
         return food instanceof Plant;
     }
 }

@@ -9,7 +9,6 @@ public class SimulationTask implements Runnable {
     public SimulationTask(Runnable task, Phaser phaser) {
         this.task = task;
         this.phaser = phaser;
-        phaser.register();
     }
 
     @Override

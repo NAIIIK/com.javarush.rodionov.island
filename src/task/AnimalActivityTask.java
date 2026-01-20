@@ -22,7 +22,7 @@ public class AnimalActivityTask implements Runnable {
 
             location.getLock().lock();
             try {
-                animalSnapshot = new ArrayList<>(location.getAnimals());
+                animalSnapshot = new ArrayList<>(location.getAnimalsSnapshot());
             } finally {
                 location.getLock().unlock();
             }

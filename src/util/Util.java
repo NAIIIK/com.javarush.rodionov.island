@@ -26,8 +26,8 @@ public final class Util {
 
     public static void performRandomActivity(Animal animal) {
         List<Runnable> activities = List.of(
-                animal::tryMove,
-                animal::tryEat,
+                animal::move,
+                animal::eat,
                 animal::breed
         );
 
