@@ -144,8 +144,6 @@ public final class AnimalService {
 
     public void die(Animal animal) {
         Location loc = animal.getLocation();
-        lockService.withLocationLock(loc, () -> {
-            loc.removeAnimal(animal);
-        });
+        lockService.withLocationLock(loc, () -> loc.removeAnimal(animal));
     }
 }

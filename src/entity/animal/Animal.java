@@ -12,7 +12,7 @@ public abstract class Animal implements Eatable {
     private final AnimalStat stat;
     private volatile Location location;
     private double satiety;
-    private AtomicBoolean alive = new AtomicBoolean(true);
+    private final AtomicBoolean alive = new AtomicBoolean(true);
     private final AnimalService service = AnimalService.getInstance();
 
     protected Animal() {

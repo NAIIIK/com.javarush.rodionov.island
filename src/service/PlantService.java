@@ -43,8 +43,6 @@ public final class PlantService {
 
     public void rot(Plant plant) {
         Location loc = plant.getLocation();
-        lockService.withLocationLock(loc, () -> {
-            loc.removePlant(plant);
-        });
+        lockService.withLocationLock(loc, () -> loc.removePlant(plant));
     }
 }
