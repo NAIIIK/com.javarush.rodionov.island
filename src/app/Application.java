@@ -21,7 +21,7 @@ public class Application {
         View view = new ConsoleUI(island);
 
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        ExecutorService executorService = Executors.newFixedThreadPool(Settings.CORE_POOL_SIZE); // для задач симуляции
+        ExecutorService executorService = Executors.newFixedThreadPool(Settings.CORE_POOL_SIZE);
 
         SimulationController controller = new SimulationController(island, scheduler);
 
