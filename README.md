@@ -1,4 +1,4 @@
-# Island Simulation — Multithreading Project
+# Island Simulation - Multithreading Project
 
 A multithreaded island ecosystem simulation written in Java.
 Animals eat, move, breed, and die across a grid of locations,
